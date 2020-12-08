@@ -8,7 +8,7 @@ export type Stay = {
   type: string;
   beds: number | null;
   photo: string;
-}
+} | null;
 
 /*
 {
