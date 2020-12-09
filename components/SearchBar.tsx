@@ -1,9 +1,13 @@
 import React, { FC } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import CustomText from './CustomText';
 import { Ionicons } from '@expo/vector-icons';
 
-const SearchBar: FC = () => {
+type Props = {
+  toggleModal: () => void;
+}
+
+const SearchBar: FC<Props> = ({ toggleModal }) => {
   return (
     <View style={styles.container}>
       <View style={styles.locationContainer}>
@@ -13,7 +17,10 @@ const SearchBar: FC = () => {
         <CustomText fontFamily='Muli' weight={400} style={styles.textInactive}>Add guests</CustomText>
       </View>
       <View style={styles.iconContainer}>
-        <Ionicons name="ios-search" size={24} color='#eb5757' />
+        <TouchableOpacity onPress={() => toggleModal()}>
+          <Ionicons name="ios-search" size={24} color='#eb5757' />
+        </TouchableOpacity>
+        
       </View>
     </View>
   )

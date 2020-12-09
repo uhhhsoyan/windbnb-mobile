@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { View, StyleSheet } from 'react-native';
 
-const SearchModal: FC = () => {
+const ModalOptionsLocation: FC = () => {
   return (
     <View>
       
@@ -9,4 +9,4 @@ const SearchModal: FC = () => {
   )
 }
 
-export default SearchModal;
+export default ModalOptionsLocation;
