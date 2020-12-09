@@ -20,15 +20,16 @@ const StayCard: FC<Props> = ({ stay }) => {
       <View style={styles.featuresRow}>
         {stay.superHost ? (
           <View style={styles.superHost}>
-            <Text style={styles.superHostText}>SUPER HOST</Text>
+            <CustomText fontFamily='Montserrat' weight={700} style={styles.superHostText}>SUPER HOST</CustomText>
           </View>
-        ) : null
-        }
-        <Text>{stay.type}</Text>
-        <Text>{stay.beds ? stay.beds : null}</Text>
-        <View style={styles.ratingContainer}>
-          <Ionicons name="ios-star" size={24} color='#eb5757' />
-          <CustomText fontFamily='Montserrat' weight={800}>{stay.rating}</CustomText>
+        ) : null}
+        <CustomText fontFamily='Montserrat' weight={500} style={styles.featuresText}>{stay.type}</CustomText>
+        {stay.beds ? (
+          <CustomText fontFamily='Montserrat' weight={500} style={styles.featuresText}>{` | ${stay.beds} beds`}</CustomText>
+        ) : null}
+        <View style={styles.ratingsContainer}>
+          <Ionicons name="ios-star" size={16} color='#eb5757' style={{ marginRight: 5 }}/>
+          <CustomText fontFamily='Montserrat' weight={500} style={styles.ratingsText}>{stay.rating}</CustomText>
         </View>
       </View>
       <Text style={styles.description}>
@@ -59,30 +60,42 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   featuresRow: {
+    marginTop: 10,
+    marginBottom: 10,
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center'
-
   },
   superHost: {
     borderWidth: 1,
     borderColor: '#4f4f4f',
-    borderRadius: 10,
+    borderRadius: 12,
+    height: 24,
+    width: 90,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 15,
   },
   superHostText: {
     color: '#4f4f4f',
+    fontSize: 10,
   },
   featuresText: {
     color: '#828282',
   },
-  ratingContainer: {
+  ratingsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 0,
   },
   ratingsText: {
     color: '#4f4f4f',
   },
   description: {
-
+    color: '#333',
+    fontSize: 16,
   },
 })
 
