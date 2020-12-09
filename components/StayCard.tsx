@@ -10,7 +10,6 @@ type Props = {
 }
 
 const StayCard: FC<Props> = ({ stay }) => {
-  //console.log(stay)
   return (
     <>
     {!stay ? null : (
@@ -44,7 +43,7 @@ const StayCard: FC<Props> = ({ stay }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+    marginBottom: 32,
   },
   imgContainer: {
     width: '100%',

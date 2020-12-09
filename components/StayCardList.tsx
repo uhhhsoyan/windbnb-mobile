@@ -10,7 +10,7 @@ type Props = {
 const StayCardList: FC<Props> = ({ stays }) => {
   return (
     <ScrollView style={styles.container}>
-      {stays.map(stay => <StayCard stay={stay} />)}   
+      {stays.map((stay, idx) => <StayCard key={idx} stay={stay} />)}   
     </ScrollView>
   )
 }
@@ -18,8 +18,6 @@ const StayCardList: FC<Props> = ({ stays }) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    borderColor: 'green',
-    borderWidth: 2,
   }
 })
 

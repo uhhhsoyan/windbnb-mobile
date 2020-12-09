@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Text } from 'react-native';
+import { Text, StyleProp, TextStyle } from 'react-native';
 import { 
   useFonts,
   Montserrat_400Regular,
@@ -14,17 +14,21 @@ import {
   Muli_600SemiBold,
   Muli_700Bold,
   Muli_800ExtraBold,
+
 } from '@expo-google-fonts/muli';
+import {
+  Poppins_700Bold,
+} from '@expo-google-fonts/poppins';
 
 
 type Props = {
   fontFamily: string;
   weight: number;
-  //styles: React.CSSProperties;
   children: React.ReactChild;
+  style?: StyleProp<TextStyle>;
 }
 
-const CustomText: FC<Props> = ({ fontFamily, weight, children }) => {
+const CustomText: FC<Props> = ({ fontFamily, weight, children, style }) => {
   let [fontsLoaded] = useFonts({
     Montserrat_400Regular,
     Montserrat_500Medium,
@@ -36,6 +40,7 @@ const CustomText: FC<Props> = ({ fontFamily, weight, children }) => {
     Muli_600SemiBold,
     Muli_700Bold,
     Muli_800ExtraBold,
+    Poppins_700Bold,
   });
 
   const getFont = (fontFamily: string, weight: number) => {
@@ -70,6 +75,13 @@ const CustomText: FC<Props> = ({ fontFamily, weight, children }) => {
           default:
             return 'Muli_400Regular';
         }
+      case 'Poppins':
+        switch(weight) {
+          case 700:
+            return 'Poppins_700Bold'
+          default:
+            return 'Poppins_700Bold'
+        }
       default:
         return 'Arial'
     }
@@ -78,7 +90,7 @@ const CustomText: FC<Props> = ({ fontFamily, weight, children }) => {
   if (!fontsLoaded) {
     return <Text>{children}</Text>;
   } else {
-    return <Text style={{ fontFamily: getFont(fontFamily, weight) }}>{children}</Text>;
+    return <Text style={[ style, { fontFamily: getFont(fontFamily, weight) }]}>{children}</Text>;
   }
   
 }
