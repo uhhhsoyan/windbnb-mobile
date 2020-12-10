@@ -1,7 +1,8 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { View, StyleSheet, Modal, Animated, Text, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { ModalSearchBar, ModalOptionsLocation, ModalOptionsGuests, CustomText } from './index';
+import { ModalSearchBar, ModalOptionsLocation, ModalOptionsGuests, CustomText } from '../components/index';
+import { Location } from '../types';
 
 type Props = {
   showModal: boolean;
@@ -9,7 +10,10 @@ type Props = {
 }
 
 const SearchModal: FC<Props> = ({ showModal, toggleModal }) => {
-  const [focused, setFocused] = useState<String>('guests')
+  const [focused, setFocused] = useState<String>('guests');
+  const [location, setLocation] = useState<Location>({ city: 'Helsinki', country: 'Finland' });
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
 
   return (
     <Modal
@@ -23,15 +27,27 @@ const SearchModal: FC<Props> = ({ showModal, toggleModal }) => {
             <Ionicons name='ios-close' size={36} color='#333'/>
           </TouchableOpacity>
         </View>
-        <ModalSearchBar setFocused={setFocused}/>
+        <ModalSearchBar 
+          setFocused={setFocused} 
+          location={location}
+          guests={adults + children}        
+        />
         {focused === 'location' ? (
-          <ModalOptionsLocation />
+          <ModalOptionsLocation 
+            location={location}
+            setLocation={setLocation}
+          />
         ) : (
-          <ModalOptionsGuests />
+          <ModalOptionsGuests
+            adults={adults}
+            setAdults={setAdults}
+            children={children}
+            setChildren={setChildren}
+          />
         )}
         <TouchableOpacity>
           <View style={styles.button}>
-            <Ionicons name="ios-search" size={36} color='#f2f2f2' />
+            <Ionicons name="ios-search" size={32} color='#f2f2f2' />
             <CustomText fontFamily='Muli' weight={700} style={styles.searchText}>Search</CustomText>
           </View>
         </TouchableOpacity>
@@ -61,16 +77,19 @@ const styles = StyleSheet.create({
   searchText: {
     color: '#f2f2f2',
     marginLeft: 12,
+    fontSize: 18,
   },
   button: {
     backgroundColor: '#eb5757',
     borderRadius: 16,
-    padding: 15,
+    padding: 10,
     paddingLeft: 24,
     paddingRight: 24,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    marginTop: '100%'
   }
 
 })

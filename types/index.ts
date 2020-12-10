@@ -10,6 +10,11 @@ export type Stay = {
   photo: string;
 } | null;
 
+export type Location = {
+  city: string;
+  country: string;
+}
+
 /*
 {
   "city": "Helsinki",

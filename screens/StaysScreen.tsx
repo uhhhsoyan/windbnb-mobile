@@ -1,12 +1,16 @@
 import React, { FC, useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { CustomText, StayCardList, SearchBar, SearchModal } from '../components';
+import SearchModal from './SearchModal';
+import { CustomText, StayCardList, SearchBar } from '../components';
 import stayData from '../data/stays.json';
 import { Feather } from '@expo/vector-icons';
 import { Stay } from '../types';
 
+
+
 const StaysScreen: FC = () => {
   const [stays, setStays] = useState<Stay[] | null>(null);
+  const [locations, setLocations] = useState<Location[]>([])
   const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {

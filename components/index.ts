@@ -1,7 +1,6 @@
 import SearchBar from './SearchBar';
 import StayCardList from './StayCardList';
 import StayCard from './StayCard';
-import SearchModal from './SearchModal';
 import ModalSearchBar from './ModalSearchBar';
 import ModalOptionsLocation from './ModalOptionsLocation';
 import ModalOptionsGuests from './ModalOptionsGuests';
@@ -11,7 +10,6 @@ export {
   SearchBar, 
   StayCardList, 
   StayCard, 
-  SearchModal,
   ModalSearchBar, 
   ModalOptionsLocation, 
   ModalOptionsGuests,

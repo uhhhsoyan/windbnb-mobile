@@ -1,22 +1,29 @@
 import React, { FC } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import CustomText from './CustomText';
-import { Ionicons } from '@expo/vector-icons';
+import { Location } from '../types';
+
 
 type Props = {
   setFocused: (toFocus: string) => void;
+  location: Location;
+  guests: number;
 }
 
-const ModalSearchBar: FC<Props> = ({ setFocused }) => {
+const ModalSearchBar: FC<Props> = ({ setFocused, location, guests }) => {
   return (
     <View style={styles.container}>
       <View style={styles.locationContainer}>
-        <CustomText fontFamily='Muli' weight={800} style={styles.searchTextHeader}>LOCATION</CustomText>
-        <CustomText fontFamily='Muli' weight={400} style={styles.textActive}>Helsinki, Finland</CustomText>
+        <TouchableOpacity onPress={() => setFocused('location')}>
+          <CustomText fontFamily='Muli' weight={800} style={styles.searchTextHeader}>LOCATION</CustomText>
+          <CustomText fontFamily='Muli' weight={400} style={styles.text}>{`${location.city}, ${location.country}`}</CustomText>
+        </TouchableOpacity>
       </View>
       <View style={styles.guestsContainer}>
-        <CustomText fontFamily='Muli' weight={800} style={styles.searchTextHeader}>GUESTS</CustomText>
-        <CustomText fontFamily='Muli' weight={400} style={styles.textInactive}>Add guests</CustomText>
+        <TouchableOpacity onPress={() => setFocused('guests')}>
+          <CustomText fontFamily='Muli' weight={800} style={styles.searchTextHeader}>GUESTS</CustomText>
+          <CustomText fontFamily='Muli' weight={400} style={guests > 0 ? styles.text : styles.textInactive}>{guests > 0 ? `${guests} guests`: 'Add guests'}</CustomText>
+        </TouchableOpacity>
       </View>
     </View>
   )
@@ -56,7 +63,7 @@ const styles = StyleSheet.create({
     fontSize: 9,
     marginBottom: 4,
   },
-  textActive: {
+  text: {
     color: '#333333',
   },
   textInactive: {
