@@ -8,12 +8,13 @@ type Props = {
   showModal: boolean;
   toggleModal: () => void;
   filter: Filter;
-  setFilter: React.Dispatch<React.SetStateAction<Filter>>
+  setFilter: React.Dispatch<React.SetStateAction<Filter>>;
+  focused: string;
+  setFocused: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const SearchModal: FC<Props> = ({ showModal, toggleModal, filter, setFilter }) => {
-  const [focused, setFocused] = useState<String>('guests');
-  const [location, setLocation] = useState<Location>({ city: 'Helsinki', country: 'Finland' });
+const SearchModal: FC<Props> = ({ showModal, toggleModal, filter, setFilter, focused, setFocused }) => {
+  const [location, setLocation] = useState<Location>(filter.location);
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
 

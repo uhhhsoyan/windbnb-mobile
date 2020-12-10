@@ -4,13 +4,15 @@ import { Stay } from '../types';
 import StayCard from './StayCard';
 
 type Props = {
-  stays: Stay[];
+  filteredStays: Stay[];
 }
 
-const StayCardList: FC<Props> = ({ stays }) => {
+const StayCardList: FC<Props> = ({ filteredStays }) => {
+  
+
   return (
-    <ScrollView style={styles.container}>
-      {stays.map((stay, idx) => <StayCard key={idx} stay={stay} />)}   
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      {filteredStays.map((stay, idx) => <StayCard key={idx} stay={stay} />)}   
     </ScrollView>
   )
 }

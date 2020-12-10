@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import SearchModal from './SearchModal';
 import { CustomText, StayCardList, SearchBar } from '../components';
 import stayData from '../data/stays.json';
@@ -7,15 +7,29 @@ import { Feather } from '@expo/vector-icons';
 import { Stay, Filter } from '../types';
 
 const StaysScreen: FC = () => {
-  const [stays, setStays] = useState<Stay[] | null>(null);
-  const [filter, setFilter] = useState<Filter>({ location: { city: 'Helsinki', country: 'Finland'}, adults: 0, children: 0 });
+  const [stays, setStays] = useState<Stay[]>([]);
+  const [filter, setFilter] = useState<Filter>({ location: { city: null, country: 'Finland'}, adults: 0, children: 0 });
+  const [filteredStays, setFilteredStays] = useState<Stay[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
-
+  const [focused, setFocused] = useState<string>('guests');
+  
   useEffect(() => {
     setStays(stayData);
+    setFilteredStays(stayData);
   }, [])
 
-  const toggleModal = () => {
+  useEffect(() => {
+    if (stays.length > 0) {
+      setFilteredStays(stays.filter(stay => (
+        stay.maxGuests >= (filter.adults + filter.children) &&
+        filter.location.city ? (stay.city === filter.location.city) : null
+        )
+      ))
+    }
+  }, [filter])
+
+  const toggleModal = (focus?: string) => {
+    focus ? setFocused(focus): null;
     setShowModal(!showModal)
   }
 
@@ -25,19 +39,25 @@ const StaysScreen: FC = () => {
       showModal={showModal} 
       toggleModal={toggleModal}
       filter={filter}
-      setFilter={setFilter}  
+      setFilter={setFilter} 
+      focused={focused}
+      setFocused={setFocused} 
     />
     <View style={styles.container}>
       <View style={styles.logoRow}>
         <Feather name="triangle" size={22} color='#eb5757' />
         <CustomText fontFamily='Poppins' weight={700} style={styles.logoText}>windbnb</CustomText>
       </View>
-      <SearchBar toggleModal={toggleModal} filter={filter}/>
+      <SearchBar toggleModal={toggleModal} filter={filter} setFocused={setFocused}/>
       <View style={styles.titleRow}>
-        <CustomText fontFamily='Montserrat' weight={700} style={styles.titleText}>Stays in Finland</CustomText>
-        <CustomText fontFamily='Montserrat' weight={500} style={styles.stayCountText}>12+ stays</CustomText>
+        <CustomText fontFamily='Montserrat' weight={700} style={styles.titleText}>{filter.location.city ? `Stays in ${filter.location.city}, ${filter.location.country}` : `Stays in ${filter.location.country}`}</CustomText>
+        <CustomText fontFamily='Montserrat' weight={500} style={styles.stayCountText}>{filteredStays.length === 0 ? '' : `${filteredStays.length} stays`}</CustomText>
       </View>
-      {stays ? <StayCardList stays={stays}/> : null }
+      {filteredStays ? (
+        <StayCardList 
+          filteredStays={filteredStays}
+        />
+      ) : null }
     </View>
   </>
   )

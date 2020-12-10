@@ -8,10 +8,10 @@ export type Stay = {
   type: string;
   beds: number | null;
   photo: string;
-} | null;
+};
 
 export type Location = {
-  city: string;
+  city: string | null;
   country: string;
 }
 
