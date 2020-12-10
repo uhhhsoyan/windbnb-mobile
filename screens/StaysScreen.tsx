@@ -4,13 +4,11 @@ import SearchModal from './SearchModal';
 import { CustomText, StayCardList, SearchBar } from '../components';
 import stayData from '../data/stays.json';
 import { Feather } from '@expo/vector-icons';
-import { Stay } from '../types';
-
-
+import { Stay, Filter } from '../types';
 
 const StaysScreen: FC = () => {
   const [stays, setStays] = useState<Stay[] | null>(null);
-  const [locations, setLocations] = useState<Location[]>([])
+  const [filter, setFilter] = useState<Filter>({ location: { city: 'Helsinki', country: 'Finland'}, adults: 0, children: 0 });
   const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
@@ -23,13 +21,18 @@ const StaysScreen: FC = () => {
 
   return (
     <>
-    <SearchModal showModal={showModal} toggleModal={toggleModal}/>
+    <SearchModal 
+      showModal={showModal} 
+      toggleModal={toggleModal}
+      filter={filter}
+      setFilter={setFilter}  
+    />
     <View style={styles.container}>
       <View style={styles.logoRow}>
         <Feather name="triangle" size={22} color='#eb5757' />
         <CustomText fontFamily='Poppins' weight={700} style={styles.logoText}>windbnb</CustomText>
       </View>
-      <SearchBar toggleModal={toggleModal}/>
+      <SearchBar toggleModal={toggleModal} filter={filter}/>
       <View style={styles.titleRow}>
         <CustomText fontFamily='Montserrat' weight={700} style={styles.titleText}>Stays in Finland</CustomText>
         <CustomText fontFamily='Montserrat' weight={500} style={styles.stayCountText}>12+ stays</CustomText>

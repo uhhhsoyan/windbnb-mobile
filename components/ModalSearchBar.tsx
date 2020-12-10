@@ -69,9 +69,6 @@ const styles = StyleSheet.create({
   textInactive: {
     color: '#bdbdbd'
   },
-  searchIcon: {
-
-  }
 })
 
 export default ModalSearchBar;

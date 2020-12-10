@@ -2,19 +2,21 @@ import React, { FC } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import CustomText from './CustomText';
 import { Ionicons } from '@expo/vector-icons';
+import { Filter } from '../types';
 
 type Props = {
   toggleModal: () => void;
+  filter: Filter;
 }
 
-const SearchBar: FC<Props> = ({ toggleModal }) => {
+const SearchBar: FC<Props> = ({ toggleModal, filter }) => {
   return (
     <View style={styles.container}>
       <View style={styles.locationContainer}>
-        <CustomText fontFamily='Muli' weight={400} style={styles.textActive}>Helsinki, Finland</CustomText>
+        <CustomText fontFamily='Muli' weight={400} style={styles.text}>{`${filter.location.city}, ${filter.location.country}`}</CustomText>
       </View>
       <View style={styles.guestsContainer}>
-        <CustomText fontFamily='Muli' weight={400} style={styles.textInactive}>Add guests</CustomText>
+        <CustomText fontFamily='Muli' weight={400} style={(filter.adults + filter.children) > 0 ? styles.text : styles.textInactive}>{(filter.adults + filter.children) > 0 ? `${filter.adults + filter.children} guests`: 'Add guests'}</CustomText>
       </View>
       <View style={styles.iconContainer}>
         <TouchableOpacity onPress={() => toggleModal()}>
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
     flex: 2,
     alignItems: 'center'
   },
-  textActive: {
+  text: {
     color: '#333333',
   },
   textInactive: {

@@ -15,6 +15,12 @@ export type Location = {
   country: string;
 }
 
+export type Filter = {
+  location: Location;
+  adults: number;
+  children: number;
+}
+
 /*
 {
   "city": "Helsinki",
